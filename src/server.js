@@ -1,6 +1,6 @@
 import express from "express";
 import fetch from "node-fetch";
-import { Stack } from "./Stack";
+import Stack from "./stack.js";
 const app = express();
 
 function parseHtmlForAhrefs(text) {
@@ -23,8 +23,7 @@ function isValid(link, domainName) {
 }
 
 async function fetchCrawler(url) {
-  let stack = new Stack();
-  stack.push(url);
+  let stack = new Stack(url);
   const linksAll = [];
   try {
     while (stack.length) {
@@ -37,8 +36,8 @@ async function fetchCrawler(url) {
       uniqLinks.forEach((link) => {
         if (isValid(link, stack[0])) stack.push(link);
       });
-      // return uniqLinks;
     }
+    return stack;
   } catch (err) {
     throw err;
   }
@@ -56,6 +55,6 @@ app.post("/parse", async (req, res) => {
 });
 
 // app.listen(3000, async () => {
-//     console.log("Server running on port 3000");
-// console.log(await fetchCrawler("http://www.darlingsk.ru/"));
+//   console.log("Server running on port 3000");
+//   console.log(await fetchCrawler("http://www.darlingsk.ru/"));
 // });

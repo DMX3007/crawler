@@ -4,8 +4,7 @@ class Node {
     this.next = null;
   }
 }
-
-class Stack {
+export default class Stack {
   constructor(value) {
     const newNode = new Node(value);
     this.top = newNode;
@@ -23,7 +22,7 @@ class Stack {
     return this;
   }
   pop() {
-    if (this.lenght === 0) {
+    if (this.length === 0) {
       return null;
     }
     const temp = this.top;
@@ -33,5 +32,3 @@ class Stack {
     return temp;
   }
 }
-
-export { Stack };
